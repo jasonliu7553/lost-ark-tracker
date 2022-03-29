@@ -1,13 +1,24 @@
 import './App.css';
 import Header from './components/Header'
-import Picklist from './components/Picklist';
+import TrackerList from './components/TrackerList';
+import ToggleReminders from './components/ToggleReminders';
+import { useState } from 'react';
 
-function App() {
+const App = () => {
+
+  const [showToggleReminders, setToggleReminders] = useState(false)
+
+  //What happens when you press the first button
+  const onAdd = () => {
+    setToggleReminders(!showToggleReminders)
+  }
+
   return (
     <div className='App' >
-      <Header />
+      <Header onClick={onAdd} showAdd={showToggleReminders} />
+      {showToggleReminders && <ToggleReminders />}
       <div className="container">
-        <Picklist />
+        <TrackerList />
       </div>
 
     </div>
