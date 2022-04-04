@@ -45,6 +45,12 @@ const App = () => {
       },
       body: JSON.stringify(updatedEvent)
     })
+
+    const data = await res.json()
+
+    setSchedEvents(schedEvents.map(
+      (event) => (event.id == id ? { ...event, reminder: data.reminder } : event)
+    ))
   }
 
   return (
