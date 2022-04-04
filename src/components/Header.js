@@ -6,7 +6,7 @@ const Header = ({ onClick, showAdd }) => {
     return (
         <header>
             <h1 style={headingStyle}> Lost Ark Tracker </h1>
-            <Button name={showAdd ? 'Save & Close' : 'Reminders'} color={showAdd ? 'green' : 'black'} onClick={onClick} />
+            <Button name={showAdd ? 'Close' : 'Reminders'} color={showAdd ? 'red' : 'green'} onClick={onClick} />
         </header>
 
     )

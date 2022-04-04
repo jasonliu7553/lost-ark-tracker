@@ -27,12 +27,12 @@ const App = () => {
     return data
   }
 
-  //What happens when you press the first button
+  //Open up the list of reminders
   const onAdd = () => {
     setToggleReminders(!showToggleReminders)
   }
 
-  //When user ticks the checkbox
+  //update reminder in server
   const onTick = async (id) => {
     const events = await fetchSchedEvents()
     const eventToEdit = events[id - 1]
@@ -56,9 +56,11 @@ const App = () => {
   return (
     <div className='App' >
       <Header onClick={onAdd} showAdd={showToggleReminders} />
+
       {showToggleReminders && <ToggleReminders schedEvents={schedEvents} onTick={onTick} />}
+
       <div className="container">
-        <TrackerList />
+        <TrackerList schedEvents={schedEvents} />
       </div>
 
     </div>

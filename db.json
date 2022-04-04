@@ -80,7 +80,7 @@
       "minute": [
         0
       ],
-      "reminder": false,
+      "reminder": true,
       "visited": false,
       "id": 2
     }
