@@ -1,15 +1,22 @@
 import React from 'react'
+import Button from './Button'
 import { useState } from 'react'
 
-const ToggleReminders = (schedEvents) => {
+const ToggleReminders = ({ schedEvents, onTick }) => {
     return (
-        <form className='add-form'>
+        < form className='add-form' >
             <div className='container'>
-                <label> First Event </label>
-                <input type='checkbox' />
+                {schedEvents.map((event) => (
+                    <h3 key={event.id}>
+                        {event.event}
+                        <input type='checkbox' id={event.id} defaultChecked={event.reminder} onChange={() => onTick(event.id)} />
+                    </h3>
+                ))}
             </div>
-        </form>
+        </form >
     )
+
+
 }
 
 export default ToggleReminders
