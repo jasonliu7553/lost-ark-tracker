@@ -3,7 +3,7 @@ import Timer from './Timer.js'
 import Button from './Button.js'
 import { useEffect, useState } from 'react'
 
-const TrackerList = ({ schedEvents }) => {
+const TrackerList = ({ schedEvents, onVisit }) => {
 
     var today = new Date()
     const [seconds, setSeconds] = useState()
@@ -110,17 +110,13 @@ const TrackerList = ({ schedEvents }) => {
 
     }
 
-    const visited = (event) => {
-        event.visited = true
-    }
-
     return (
         trackedEvents.map((event) => (
             <div key={event.id}>
                 <h3>
                     {event.event}
                     <Timer e={event} timer={updateTimer(event)} />
-                    <Button name='visited' onClick={() => visited(event)} color='black' />
+                    <Button name='visited' onClick={() => onVisit(event.id)} color='black' />
                 </h3>
                 <h4>
                     {formatTime(event)}

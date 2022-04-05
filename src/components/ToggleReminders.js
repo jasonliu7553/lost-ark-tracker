@@ -1,7 +1,9 @@
 import React from 'react'
+import Button from './Button.js'
 import { Helmet } from 'react-helmet'
 
 const ToggleReminders = ({ schedEvents, onTick }) => {
+
     return (
         < form className='add-form' >
             <div className='container'>

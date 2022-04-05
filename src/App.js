@@ -38,7 +38,7 @@ const App = () => {
   const onTick = async (id) => {
     const events = await fetchSchedEvents()
     const eventToEdit = events[id - 1]
-    const updatedEvent = { ...eventToEdit, reminder: !eventToEdit.reminder }
+    const updatedEvent = { ...eventToEdit, reminder: !eventToEdit.reminder, visited: false }
 
     const res = await fetch(`http://localhost:5000/schedEvents/${id}`, {
       method: 'PUT',
@@ -51,8 +51,30 @@ const App = () => {
     const data = await res.json()
 
     setSchedEvents(schedEvents.map(
-      (event) => (event.id == id ? { ...event, reminder: data.reminder } : event)
+      (event) => (event.id == id ? { ...event, reminder: data.reminder, visited: false } : event)
     ))
+  }
+
+  const onVisit = async (id) => {
+    const events = await fetchSchedEvents()
+    const eventToEdit = events[id - 1]
+    const updatedEvent = { ...eventToEdit, visited: true }
+
+    const res = await fetch(`http://localhost:5000/schedEvents/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(updatedEvent)
+    })
+
+    const data = await res.json()
+
+    setSchedEvents(schedEvents.map(
+      (event) => (event.id == id ? { ...event, visited: true } : event)
+    ))
+
+    console.log('onvisit')
   }
 
   return (
@@ -63,7 +85,7 @@ const App = () => {
       {showToggleReminders && <ToggleReminders schedEvents={schedEvents} onTick={onTick} />}
 
       <div className="container">
-        <TrackerList schedEvents={schedEvents} />
+        <TrackerList schedEvents={schedEvents} onVisit={onVisit} />
       </div>
 
 
