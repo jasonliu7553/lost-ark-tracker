@@ -10,6 +10,7 @@ const App = () => {
 
   const [showToggleReminders, setToggleReminders] = useState()
   const [schedEvents, setSchedEvents] = useState()
+  const [timer, setTimer] = useState()
 
   useEffect(() => {
 

@@ -1,10 +1,11 @@
 import React from 'react'
-import { useState } from 'react'
+import Timer from './Timer.js'
+import { useState, Component } from 'react'
 
 const TrackerList = ({ schedEvents }) => {
 
     const today = new Date()
-    const [eventTimers, setEventTimers] = useState()
+    const [timer, setTimer] = useState()
 
 
     //filter out the events that are not on the reminder list, or already visited
@@ -36,28 +37,6 @@ const TrackerList = ({ schedEvents }) => {
 
     }
 
-    const updateTimer = (event) => {
-        var day = new Date()
-        var hour
-        var minute
-        var sec = 60 - day.getSeconds()
-
-        if (event.minute < day.minute && event.minute != 0) {
-            hour = nextHour(event, true)
-            minute = event.minute
-        }
-        else {
-            hour = nextHour(event, false) - 1
-            minute = 60
-        }
-
-        event.timer = [hour - day.getHours(), Math.abs(minute - day.getMinutes()), sec]
-
-        //var run = setInterval(() => (setEventTimers(event.timer)), 1000)
-
-
-    }
-
     //returns the next time event will happen as a string
     const formatTime = (event) => {
         const minute = event.minute
@@ -71,11 +50,16 @@ const TrackerList = ({ schedEvents }) => {
 
         var output = ` ${hour}:${minute}`
 
+        if (hour < 10 & minute < 10)
+            output = `Next spawn:  0${hour}:0${minute}`
+        else if (hour < 10)
+            output = `Next spawn:  0${hour}:${minute}`
+        else if (minute < 10)
+            output = `Next spawn:  ${hour}:0${minute}`
+
         if (hour === -1) {
             output = 'no more spawns'
         }
-
-        updateTimer(event)
 
         return output
     }
@@ -84,10 +68,10 @@ const TrackerList = ({ schedEvents }) => {
         trackedEvents.map((event) => (
             <div key={event.id}>
                 <h3>
-                    {event.event}
+                    {event.event} <Timer event={event} />
                 </h3>
                 <h4>
-                    Next spawn: {formatTime(event)},    {event.timer[0]}:{event.timer[1]}:{event.timer[2]}
+                    {formatTime(event)}, {event.timer[0]}:{event.timer[1]}:{event.timer[2]}
                 </h4>
             </div>
         ))
