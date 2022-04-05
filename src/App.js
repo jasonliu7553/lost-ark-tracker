@@ -3,7 +3,6 @@ import Header from './components/Header'
 import TrackerList from './components/TrackerList';
 import ToggleReminders from './components/ToggleReminders';
 import background from './img/LAback.jpg'
-import { Helmet } from 'react-helmet'
 import { useEffect, useState } from 'react';
 
 const App = () => {

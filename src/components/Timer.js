@@ -1,66 +1,45 @@
-import { Component } from 'react'
+import { useState } from 'react'
 
-export class Timer extends Component {
+const Timer = ({ timer }) => {
 
-    static schedEvent
+    const output = () => {
 
-    constructor(event) {
-        super()
-        this.schedEvent = event
-    }
-
-    //return the next hour the boss spawns or -1 if there are no more spawn hours
-    updateTimer(event) {
-        var day = new Date()
-        var hour
+        var second
         var minute
-        var sec = 60 - day.getSeconds()
+        var hour
 
-        if (event.minute < day.minute && event.minute != 0) {
-            hour = nextHour(event, true)
-            minute = event.minute
-        }
-        else {
-            hour = nextHour(event, false) - 1
-            minute = 60
-        }
+        //hours
+        if (timer[0] < 10 && timer[0] >= 0)
+            hour = `0${timer[0]}`
+        else
+            hour = timer[0]
 
-        event.timer = [hour - day.getHours(), Math.abs(minute - day.getMinutes()), sec]
+        //minutes
+        if (timer[1] < 10)
+            minute = `0${timer[1]}`
+        else
+            minute = `${timer[1]}`
 
+        //seconds
+        if (timer[2] < 10)
+            second = `0${timer[2]}`
+        else
+            second = timer[2]
 
-        //var run = setInterval(() => setTimer(event.timer), 1000)
+        var text = `${hour}:${minute}:${second}`
 
+        return text
 
     }
 
-    render() { return (<>1</>) }
 
 
+    return (<label>{output()}</label>)
 
-
-    componentWillUnmount() {
-        clearInterval()
-    }
 }
 
-function nextHour(event, next) {
-    var today = new Date()
-    const hours = event.hour.filter((hour) => (
-        hour > today.getHours()
-    ))
-
-    if (next === true && hours.length > 1) {
-        return hours[1]
-    } else if (next === true) {
-        return -1
-    }
-    else if (hours.length > 0) {
-        return hours[0]
-    }
-    else {
-        return -1
-    }
-
+Timer.defaultProps = {
+    timer: [0, 0, 0]
 }
 
 export default Timer
