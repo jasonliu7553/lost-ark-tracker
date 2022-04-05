@@ -15,9 +15,12 @@ body {
   margin: 30px auto;
   overflow: auto;
   min-height: 300px;
+  max-height: 500px;
+  background-color: #f4f4f4;
   border: 1px solid steelblue;
   padding: 30px;
   border-radius: 5px;
+  opacity: 0.75;
 }
 
 .header {

@@ -1,6 +1,5 @@
 import React from 'react'
-import Button from './Button'
-import { useState } from 'react'
+import { Helmet } from 'react-helmet'
 
 const ToggleReminders = ({ schedEvents, onTick }) => {
     return (

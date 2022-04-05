@@ -2,6 +2,8 @@ import './App.css';
 import Header from './components/Header'
 import TrackerList from './components/TrackerList';
 import ToggleReminders from './components/ToggleReminders';
+import background from './img/LAback.jpg'
+import { Helmet } from 'react-helmet'
 import { useEffect, useState } from 'react';
 
 const App = () => {
@@ -54,7 +56,8 @@ const App = () => {
   }
 
   return (
-    <div className='App' >
+
+    <div className='App' style={{ backgroundImage: `url(${background})`, backgroundSize: 'cover', backgroundPosition: 'center', width: '100vw', height: '75vw' }}>
       <Header onClick={onAdd} showAdd={showToggleReminders} />
 
       {showToggleReminders && <ToggleReminders schedEvents={schedEvents} onTick={onTick} />}
@@ -63,7 +66,9 @@ const App = () => {
         <TrackerList schedEvents={schedEvents} />
       </div>
 
+
     </div>
+
   );
 }
 

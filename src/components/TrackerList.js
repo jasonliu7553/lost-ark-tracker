@@ -53,7 +53,8 @@ const TrackerList = ({ schedEvents }) => {
 
         event.timer = [hour - day.getHours(), Math.abs(minute - day.getMinutes()), sec]
 
-        var run = setInterval(() => (setEventTimers(event.timer)), 1000)
+        //var run = setInterval(() => (setEventTimers(event.timer)), 1000)
+
 
     }
 
