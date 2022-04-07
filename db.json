@@ -42,7 +42,7 @@
         0,
         0
       ],
-      "reminder": false,
+      "reminder": true,
       "visited": false,
       "id": 1
     },
@@ -87,7 +87,7 @@
         0
       ],
       "minute": 0,
-      "reminder": false,
+      "reminder": true,
       "visited": false,
       "id": 2
     },
@@ -118,8 +118,8 @@
         0
       ],
       "minute": 40,
-      "reminder": false,
-      "visited": false,
+      "reminder": true,
+      "visited": true,
       "id": 3
     },
     {
@@ -148,9 +148,9 @@
         0,
         0
       ],
-      "minute": 10,
+      "minute": 31,
       "reminder": true,
-      "visited": false,
+      "visited": true,
       "id": 4
     }
   ]

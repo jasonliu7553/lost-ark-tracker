@@ -3,7 +3,7 @@ import Timer from './Timer.js'
 import Button from './Button.js'
 import { useEffect, useState } from 'react'
 
-const TrackerList = ({ schedEvents, onVisit }) => {
+const TrackerList = ({ schedEvents, onVisit, updateQueue }) => {
 
     var today = new Date()
     const [seconds, setSeconds] = useState()
@@ -31,6 +31,7 @@ const TrackerList = ({ schedEvents, onVisit }) => {
             if (event.day[i] >= today.getDay()) {
                 return event.day[i]
             }
+
         }
 
         return event.day[0]
@@ -105,6 +106,10 @@ const TrackerList = ({ schedEvents, onVisit }) => {
 
         hour = nextHour(event, false)
         minute = Math.abs(minute) - 1
+
+        if (hour - day.getHours() === 0 && minute <= 0 && sec < 5) {
+            console.log('popUp')
+        }
 
         return [hour - day.getHours(), minute, sec]
 

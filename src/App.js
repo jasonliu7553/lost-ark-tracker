@@ -10,16 +10,11 @@ const App = () => {
 
   const [showToggleReminders, setToggleReminders] = useState()
   const [schedEvents, setSchedEvents] = useState()
-  const [timer, setTimer] = useState()
   const [isOpen, setIsOpen] = useState(false)
+  const [popUpID, setPopUpID] = useState('NaN')
 
-  var test = 'n'
+  const [popUpIDQueue, setPopUpIDQueue] = useState([])
 
-  const togglePopUp = (id) => {
-    test = 't'
-    setIsOpen(!isOpen)
-    console.log(id)
-  }
 
   useEffect(() => {
 
@@ -27,9 +22,28 @@ const App = () => {
       const eventsFromServer = await fetchSchedEvents()
       setSchedEvents(eventsFromServer)
     }
-
     getSchedEvents()
+
   }, [])
+
+  const pushID = (id) => {
+    popUpIDQueue.push(id)
+    if (!isOpen)
+      updateQueue()
+  }
+
+  const updateQueue = () => {
+    if (popUpIDQueue.length > 0 && !isOpen) {
+      togglePopUp(popUpIDQueue.shift())
+    }
+  }
+
+
+  // Show/Hide the PopUp
+  const togglePopUp = (id) => {
+    setIsOpen(!isOpen)
+    setPopUpID(id)
+  }
 
   //fetch scheduled events
   const fetchSchedEvents = async () => {
@@ -65,6 +79,44 @@ const App = () => {
     ))
   }
 
+  //clears the visit on a events 
+  const clearVisit = async (id) => {
+
+    const events = await fetchSchedEvents()
+    const eventToEdit = events[id - 1]
+    const updatedEvent = { ...eventToEdit, visited: false }
+
+    const res = await fetch(`http://localhost:5000/schedEvents/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(updatedEvent)
+    })
+
+    setSchedEvents(schedEvents.map(
+      (event) => (event.id == id ? { ...event, visited: false } : event)
+    ))
+  }
+
+  //Clears all the visits
+  const clearAllVisits = async () => {
+
+    setSchedEvents(schedEvents.map(
+      (event) => ({ ...event, visited: false })
+    ))
+
+    await fetch(`http://localhost:5000/schedEvents`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(schedEvents)
+    })
+
+  }
+
+  //User confirms they visited the event
   const onVisit = async (id) => {
     const events = await fetchSchedEvents()
     const eventToEdit = events[id - 1]
@@ -91,15 +143,16 @@ const App = () => {
 
     <div className='App' style={{ backgroundImage: `url(${background})`, backgroundSize: 'cover', backgroundPosition: 'center', width: '100vw', height: '75vw' }}>
 
-      <Header onClick={onAdd} showAdd={showToggleReminders} />
+      <Header onClick={onAdd} showAdd={showToggleReminders} updateQueue={updateQueue} />
 
-      {showToggleReminders && <ToggleReminders schedEvents={schedEvents} onTick={onTick} />}
+      {showToggleReminders && <ToggleReminders schedEvents={schedEvents} onTick={onTick} clearVisit={clearAllVisits} />}
 
       <div className="container">
-        <TrackerList schedEvents={schedEvents} onVisit={onVisit} />
+        <TrackerList schedEvents={schedEvents} onVisit={pushID} updateQueue={updateQueue} />
       </div>
 
-      {isOpen && <PopUp handleClose={togglePopUp} eventName={test} />}
+      {/*Pop up*/}
+      {isOpen && <PopUp handleClose={togglePopUp} eventID={popUpID} yes={() => onVisit(popUpID)} events={schedEvents} />}
 
 
     </div>
