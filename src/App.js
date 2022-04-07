@@ -2,6 +2,7 @@ import './App.css';
 import Header from './components/Header'
 import TrackerList from './components/TrackerList';
 import ToggleReminders from './components/ToggleReminders';
+import PopUp from './components/PopUp';
 import background from './img/LAback.jpg'
 import { useEffect, useState } from 'react';
 
@@ -10,6 +11,15 @@ const App = () => {
   const [showToggleReminders, setToggleReminders] = useState()
   const [schedEvents, setSchedEvents] = useState()
   const [timer, setTimer] = useState()
+  const [isOpen, setIsOpen] = useState(false)
+
+  var test = 'n'
+
+  const togglePopUp = (id) => {
+    test = 't'
+    setIsOpen(!isOpen)
+    console.log(id)
+  }
 
   useEffect(() => {
 
@@ -74,12 +84,13 @@ const App = () => {
       (event) => (event.id == id ? { ...event, visited: true } : event)
     ))
 
-    console.log('onvisit')
+    togglePopUp(id)
   }
 
   return (
 
     <div className='App' style={{ backgroundImage: `url(${background})`, backgroundSize: 'cover', backgroundPosition: 'center', width: '100vw', height: '75vw' }}>
+
       <Header onClick={onAdd} showAdd={showToggleReminders} />
 
       {showToggleReminders && <ToggleReminders schedEvents={schedEvents} onTick={onTick} />}
@@ -87,6 +98,8 @@ const App = () => {
       <div className="container">
         <TrackerList schedEvents={schedEvents} onVisit={onVisit} />
       </div>
+
+      {isOpen && <PopUp handleClose={togglePopUp} eventName={test} />}
 
 
     </div>

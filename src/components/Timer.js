@@ -4,6 +4,9 @@ const Timer = ({ timer }) => {
 
     const output = () => {
 
+        if (timer[0] < 0)
+            return '--:--:--'
+
         var second
         var minute
         var hour

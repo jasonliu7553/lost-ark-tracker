@@ -114,8 +114,7 @@ const TrackerList = ({ schedEvents, onVisit }) => {
         trackedEvents.map((event) => (
             <div key={event.id}>
                 <h3>
-                    {event.event}
-                    <Timer e={event} timer={updateTimer(event)} />
+                    {event.event} ~ <Timer e={event} timer={updateTimer(event)} />
                     <Button name='visited' onClick={() => onVisit(event.id)} color='black' />
                 </h3>
                 <h4>
