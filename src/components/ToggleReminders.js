@@ -16,7 +16,7 @@ const ToggleReminders = ({ schedEvents, onTick, clearVisit }) => {
                     ))}
 
                 </div>
-                <Button onClick={clearVisit} />
+                <Button onClick={clearVisit} name='Clear Visits [WIP]' />
             </div>
         </form >
     )

@@ -27,7 +27,16 @@ const App = () => {
   }, [])
 
   const pushID = (id) => {
-    popUpIDQueue.push(id)
+    var toPush = true
+
+    for (var i = 0; i < popUpIDQueue.length; i++) {
+      if (popUpIDQueue[i].id === id)
+        toPush = false
+    }
+
+    if (toPush)
+      popUpIDQueue.push(id)
+
     if (!isOpen)
       updateQueue()
   }
@@ -148,7 +157,7 @@ const App = () => {
       {showToggleReminders && <ToggleReminders schedEvents={schedEvents} onTick={onTick} clearVisit={clearAllVisits} />}
 
       <div className="container">
-        <TrackerList schedEvents={schedEvents} onVisit={pushID} updateQueue={updateQueue} />
+        <TrackerList schedEvents={schedEvents} onVisit={pushID} updateQueue={updateQueue} pushID={pushID} />
       </div>
 
       {/*Pop up*/}
